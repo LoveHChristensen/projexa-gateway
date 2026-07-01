@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: projexa-gateway
+    runtime: docker
+    plan: free
+    healthCheckPath: /
+    envVars:
+      - key: MAIN_UPSTREAM
+        value: https://projectmanager-m9k9.onrender.com
+      - key: AFTERGLOW_UPSTREAM
+        value: https://afterglow-0cb6.onrender.com
+      - key: ONTHEROCKS_UPSTREAM
+        value: https://ontherocks.onrender.com
