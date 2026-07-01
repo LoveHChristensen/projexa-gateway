@@ -1,9 +1,11 @@
 services:
   - type: web
     name: projexa-gateway
-    runtime: docker
+    runtime: node
     plan: free
-    healthCheckPath: /
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /health
     envVars:
       - key: MAIN_UPSTREAM
         value: https://projectmanager-m9k9.onrender.com

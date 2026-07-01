@@ -45,4 +45,8 @@ Redeploy those sites after adding the tag.
 
 ## Add another project later
 
-Add a new `handle` block in `Caddyfile`, set an env var in `render.yaml`, and configure `basePath` / `<base href>` in that app.
+Add a route in `server.js`, set an env var in `render.yaml`, and configure `basePath` / `<base href>` in that app.
+
+## Runtime
+
+Uses Node.js + Express on Render (not Docker). The official Caddy image fails on Render with `exec /usr/bin/caddy: operation not permitted`.
