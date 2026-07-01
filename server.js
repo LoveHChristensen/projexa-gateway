@@ -4,17 +4,16 @@ import { createProxyMiddleware } from "http-proxy-middleware";
 const PORT = Number(process.env.PORT) || 10000;
 
 const upstreams = {
-  main: process.env.MAIN_UPSTREAM,
-  afterglow: process.env.AFTERGLOW_UPSTREAM,
-  ontherocks: process.env.ONTHEROCKS_UPSTREAM,
+  main:
+    process.env.MAIN_UPSTREAM ??
+    "https://projectmanager-m9k9.onrender.com",
+  afterglow:
+    process.env.AFTERGLOW_UPSTREAM ??
+    "https://afterglow-0cb6.onrender.com",
+  ontherocks:
+    process.env.ONTHEROCKS_UPSTREAM ??
+    "https://ontherocks.onrender.com",
 };
-
-for (const [name, url] of Object.entries(upstreams)) {
-  if (!url) {
-    console.error(`Missing required env var for route: ${name}`);
-    process.exit(1);
-  }
-}
 
 function createRouteProxy(target) {
   return createProxyMiddleware({
@@ -53,4 +52,7 @@ app.use("/", createRouteProxy(upstreams.main));
 
 app.listen(PORT, () => {
   console.log(`projexa-gateway listening on port ${PORT}`);
+  for (const [name, url] of Object.entries(upstreams)) {
+    console.log(`  ${name}: ${url}`);
+  }
 });
