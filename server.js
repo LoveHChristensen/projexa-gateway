@@ -37,15 +37,15 @@ function createRouteProxy(target) {
 
 const app = express();
 
+const PREFIXES = ["/afterglow", "/ontherocks"];
+
 app.get("/health", (_req, res) => {
   res.status(200).send("ok");
 });
 
-for (const prefix of ["/afterglow", "/ontherocks"]) {
-  app.use(`${prefix}/`, createRouteProxy(upstreams[prefix.slice(1)]));
-  app.get(prefix, (_req, res) => {
-    res.redirect(301, `${prefix}/`);
-  });
+for (const prefix of PREFIXES) {
+  const key = prefix.slice(1);
+  app.use(prefix, createRouteProxy(upstreams[key]));
 }
 
 app.use("/", createRouteProxy(upstreams.main));
